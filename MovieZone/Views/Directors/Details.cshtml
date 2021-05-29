@@ -1,0 +1,43 @@
+﻿@model MovieZone.ViewModels.DirectorDetailsViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Director.Name</h2>
+@if (Model.AvgRating == 0)
+{
+    <p>No rated movies</p>
+}
+else
+{
+    <p>Average rating @Model.AvgRating</p>
+}
+@if (Model.Director.Bio == null)
+{
+    <p>No one has added bio yet</p>
+}
+else
+{
+    <p>@Model.Director.Bio</p>
+}
+
+@foreach (var movie in Model.Movies)
+{
+    <ul>
+        <li>
+            @movie.Title
+        </li>
+        <li>
+            @movie.ReleaseYear
+        </li>
+        <li>
+            @movie.Rating
+        </li>
+        <li>
+            @movie.Genre.Name
+        </li>
+    </ul>
+}
+
+

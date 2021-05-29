@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNet.Identity
+@model MovieZone.ViewModels.MovieDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var defaultValue = (Model.UserRatingValue == 0) ? "" : Model.UserRatingValue.ToString();
+    var movie = Model.Movie;
+
+}
+
+<h2>@movie.Title</h2>
+<p>@movie.ReleaseYear</p>
+<p>@movie.DurationInMinutes</p>
+<p>@movie.Director.Name</p>
+<p>@movie.RatingAvg</p>
+<p>@movie.Genre.Name</p>
+
+
+@*<div>
+        @Html.LabelFor(m => m.UserRatingValue)
+        @Html.DropDownListFor(m => m.UserRatingValue, new SelectList(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, defaultValue), new { @class = "form-control" })
+        @Html.ActionLink("RATE MOVIE", "Rate", "Movies", new { id = Model.Movie.Id, value = Model.UserRatingValue }, new { @class = "btn btn-primary" })
+    </div>*@
+@using (Html.BeginForm("Rate", "Movies", new { id = Model.Movie.Id, value = Model.UserRatingValue }))
+{
+    @Html.LabelFor(m => m.UserRatingValue)
+    @Html.DropDownListFor(m => m.UserRatingValue, new SelectList(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, defaultValue), new { @class = "form-control" })
+    @Html.HiddenFor(m => m.Movie.Id)
+    <button type="submit">RATE MOVIE</button>
+}
+
+
+
+@Html.ActionLink("SHOW ALL REVIEWS", "Details", "Movies", new { id = Model.Movie.Id, showAllReviews = true }, new { @class = "btn btn-primary" })
+
+@if (Model.RatingsWithReview.Any(r => r == null))
+{
+    <p>No reviews</p>
+}
+else
+{
+    foreach (var rating in Model.RatingsWithReview)
+    {
+        <p>@rating.Value</p>
+        <p>@rating.ApplicationUser.UserName</p>
+        <p>@rating.Review.Body</p>
+        <p>@rating.Review.DateAdded</p>
+    }
+}
+

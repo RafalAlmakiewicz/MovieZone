@@ -1,0 +1,37 @@
+﻿
+@model MovieZone.ViewModels.MoviesListViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var defaultValue = Model.Genres.Single(g => g.Id == Model.GenreFilter).Name;
+}
+
+<h2>Movies</h2>
+
+@using (Html.BeginForm(new { sort = Model.Sort, genreFilter = Model.GenreFilter, ascending = Model.Ascending, }))
+{
+    <div>
+        @Html.LabelFor(m => m.GenreFilter)
+        @Html.DropDownListFor(m => m.GenreFilter, new SelectList(Model.Genres, "Id", "Name"), new { @class = "form-control" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Sort)
+        @Html.DropDownListFor(m => m.Sort, new SelectList(Enum.GetNames(Model.Sort.GetType()), Model.Sort), "All genres", new { @class = "form-control" })
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Ascending)
+        @Html.DropDownListFor(m => m.Ascending, new SelectList(new[] { new { Val = false, Text = "descending" }, new { Val = true, Text = "ascending" } }, "Val", "Text"), new { @class = "form-control" })
+    </div>
+    <button type="submit">APPLY</button>
+}
+
+@foreach (var movie in Model.Movies)
+{
+    <h2>@movie.Title</h2>
+    <p>@movie.ReleaseYear</p>
+    <p>@movie.DurationInMinutes</p>
+    <p>@movie.Director.Name</p>
+    <p>@movie.RatingAvg</p>
+    <p>@movie.Genre.Name</p>
+}

@@ -1,0 +1,28 @@
+﻿@model MovieZone.Models.Rating
+@{
+    ViewBag.Title = "ReviewForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var defaultValue = (Model.Value == 0) ? "" : Model.Value.ToString();
+}
+
+<h2>ReviewForm</h2>
+
+@using (Html.BeginForm("SaveReview", "Movies"))
+{
+    <div>
+        @Html.LabelFor(m => m.Value)
+        @Html.DropDownListFor(m => m.Value, new SelectList(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, defaultValue), new { @class = "form-control" })
+    </div>
+    <div>
+        @Html.TextAreaFor(m => m.Review.Body, new { @class = "form-control", rows = "10", cols = "10" })
+    </div>
+    <div>
+        @Html.HiddenFor(m => m.MovieId)
+        @Html.HiddenFor(m => m.ApplicationUserId)
+    </div>
+    <button type="submit">POST</button>
+}
+
+
+
+
