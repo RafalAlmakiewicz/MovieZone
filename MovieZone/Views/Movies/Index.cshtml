@@ -9,7 +9,7 @@
 
 <h2>Movies</h2>
 
-@using (Html.BeginForm(new { sort = Model.Sort, genreFilter = Model.GenreFilter, ascending = Model.Ascending, }))
+@using (Html.BeginForm(new { pageSize = Model.PageSize, sort = Model.Sort, genreFilter = Model.GenreFilter, ascending = Model.Ascending }))
 {
     <div>
         @Html.LabelFor(m => m.GenreFilter)
@@ -23,6 +23,10 @@
         @Html.LabelFor(m => m.Ascending)
         @Html.DropDownListFor(m => m.Ascending, new SelectList(new[] { new { Val = false, Text = "descending" }, new { Val = true, Text = "ascending" } }, "Val", "Text"), new { @class = "form-control" })
     </div>
+    <div>
+        @Html.LabelFor(m => m.PageSize)
+        @Html.DropDownListFor(m => m.PageSize, new SelectList(new int[] { 5, 10, 20, 40 }), new { @class = "form-control" })
+    </div>
     <button type="submit">APPLY</button>
 }
 
@@ -35,3 +39,15 @@
     <p>@movie.RatingAvg</p>
     <p>@movie.Genre.Name</p>
 }
+
+<table>
+    <tr>
+        @for (var i = 1; i <= Model.PageCount; i++)
+        {
+            <td width="15" height="15">
+                @Html.ActionLink(i.ToString(), "Index", "Movies", new { pageNum = i }, null)
+            </td>
+        }
+
+    </tr>
+</table>

@@ -28,6 +28,9 @@ namespace MovieZone.ViewModels
         //};
         public bool Ascending { get; set; }
 
+        public int PageCount { get; set; }
+        public int PageSize { get; set; }
+
         //var sortingOrder = new[] { new { val = true, text = "descending" }, new { val = false, text = "ascending" } };
 
     }
