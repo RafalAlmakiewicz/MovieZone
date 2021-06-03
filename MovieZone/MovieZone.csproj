@@ -192,6 +192,10 @@
     <Compile Include="Migrations\202105271738302_ModifyMovie.designer.cs">
       <DependentUpon>202105271738302_ModifyMovie.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106021846100_AllowMultipleGenresPerMovie.cs" />
+    <Compile Include="Migrations\202106021846100_AllowMultipleGenresPerMovie.designer.cs">
+      <DependentUpon>202106021846100_AllowMultipleGenresPerMovie.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Director.cs" />
@@ -296,6 +300,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105271738302_ModifyMovie.resx">
       <DependentUpon>202105271738302_ModifyMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106021846100_AllowMultipleGenresPerMovie.resx">
+      <DependentUpon>202106021846100_AllowMultipleGenresPerMovie.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

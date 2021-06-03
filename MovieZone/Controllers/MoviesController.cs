@@ -22,14 +22,13 @@ namespace MovieZone.Controllers
         [Route("movies/browse/{pageNum:int:min(1)=1}")]//:int:min(1)=1
         public ActionResult Index(int pageNum, int pageSize = 10, bool ascending=false, int genreFilter = 0, SortBy sort = SortBy.Popularity )
         {
-            var movies = _context.Movies.Include(m => m.Director).Include(m => m.Genre).ToList();
+            var movies = _context.Movies.Include(m => m.Director).Include(m => m.Genres).ToList();
+
+            var genres = new List<Genre> { new Genre { Id = 0, Name = "All" } };
+            genres.AddRange(_context.Genres.ToList());
 
             if (genreFilter != 0)
-                movies = movies.Where(m => m.GenreId == genreFilter).ToList();
-
-            var pageCount = (movies.Count % pageSize == 0) ? movies.Count / pageSize : movies.Count / pageSize + 1;
-
-            movies = movies.Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+                  movies = movies.Where(m => m.Genres.Contains(genres.Single(g => g.Id == genreFilter))).ToList();
 
             switch (sort)
             {
@@ -50,8 +49,11 @@ namespace MovieZone.Controllers
             if (ascending)
                 movies.Reverse();
 
-            var genres = new List<Genre> { new Genre { Id=0, Name="All"} };
-            genres.AddRange(_context.Genres.ToList());
+            var pageCount = (movies.Count % pageSize == 0) ? movies.Count / pageSize : movies.Count / pageSize + 1;
+
+            movies = movies.Skip((pageNum - 1) * pageSize).Take(pageSize).ToList();
+
+            
 
             var model = new MoviesListViewModel()
             {
@@ -68,7 +70,7 @@ namespace MovieZone.Controllers
 
         public ActionResult Details(int id, bool showAllReviews=false)
         {
-            var movie = _context.Movies.Include(m => m.Genre).Include(m => m.Director).SingleOrDefault(m => m.Id == id);
+            var movie = _context.Movies.Include(m => m.Genres).Include(m => m.Director).SingleOrDefault(m => m.Id == id);
             if (movie == null)
                 return HttpNotFound();
             //movie.Genre = _context.Genres.Single(g => g.Id == movie.GenreId);

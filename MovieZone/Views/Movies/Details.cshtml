@@ -14,7 +14,10 @@
 <p>@movie.DurationInMinutes</p>
 <p>@movie.Director.Name</p>
 <p>@movie.RatingAvg</p>
-<p>@movie.Genre.Name</p>
+@foreach (var genre in movie.Genres)
+{
+    @genre.Name
+}
 
 
 @*<div>
@@ -22,7 +25,7 @@
         @Html.DropDownListFor(m => m.UserRatingValue, new SelectList(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, defaultValue), new { @class = "form-control" })
         @Html.ActionLink("RATE MOVIE", "Rate", "Movies", new { id = Model.Movie.Id, value = Model.UserRatingValue }, new { @class = "btn btn-primary" })
     </div>*@
-@using (Html.BeginForm("Rate", "Movies", new { id = Model.Movie.Id, value = Model.UserRatingValue }))
+@using (Html.BeginForm("Rate", "Movies", new { id = movie.Id, value = Model.UserRatingValue }))
 {
     @Html.LabelFor(m => m.UserRatingValue)
     @Html.DropDownListFor(m => m.UserRatingValue, new SelectList(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, defaultValue), new { @class = "form-control" })
@@ -32,7 +35,7 @@
 
 
 
-@Html.ActionLink("SHOW ALL REVIEWS", "Details", "Movies", new { id = Model.Movie.Id, showAllReviews = true }, new { @class = "btn btn-primary" })
+@Html.ActionLink("SHOW ALL REVIEWS", "Details", "Movies", new { id = movie.Id, showAllReviews = true }, new { @class = "btn btn-primary" })
 
 @if (Model.RatingsWithReview.Any(r => r == null))
 {

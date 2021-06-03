@@ -31,7 +31,7 @@ namespace MovieZone.Controllers
             var model = new DirectorDetailsViewModel
             {
                 Director = director,
-                Movies = _context.Movies.Include(m => m.Genre).Where(m => m.DirectorId == id).OrderByDescending(m => m.ReleaseYear).ThenBy(m => m.Title)
+                Movies = _context.Movies.Include(m => m.Genres).Where(m => m.DirectorId == id).OrderByDescending(m => m.ReleaseYear).ThenBy(m => m.Title)
             };
             return View(model);
         }

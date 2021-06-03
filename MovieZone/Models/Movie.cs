@@ -17,8 +17,7 @@ namespace MovieZone.Models
         public Director Director { get; set; }
         public int DirectorId { get; set; }
         public int DurationInMinutes { get; set; }
-        public Genre Genre { get; set; }
-        public int GenreId { get; set; }
+        public List<Genre> Genres { get; set; }
         public double RatingAvg
         {
             get

@@ -32,12 +32,15 @@
 
 @foreach (var movie in Model.Movies)
 {
-    <h2>@movie.Title</h2>
+    @Html.ActionLink(movie.Title, "Details", "Movies", new { id = movie.Id}, null)
     <p>@movie.ReleaseYear</p>
     <p>@movie.DurationInMinutes</p>
     <p>@movie.Director.Name</p>
     <p>@movie.RatingAvg</p>
-    <p>@movie.Genre.Name</p>
+    foreach (var genre in movie.Genres)
+    {
+        @genre.Name
+    }
 }
 
 <table>
@@ -45,7 +48,7 @@
         @for (var i = 1; i <= Model.PageCount; i++)
         {
             <td width="15" height="15">
-                @Html.ActionLink(i.ToString(), "Index", "Movies", new { pageNum = i }, null)
+                @Html.ActionLink(i.ToString(), "Index", "Movies", new { pageNum = i, pageSize = Model.PageSize, sort = Model.Sort, genreFilter = Model.GenreFilter, ascending = Model.Ascending }, new { @class = "btn btn-primary" })
             </td>
         }
 
