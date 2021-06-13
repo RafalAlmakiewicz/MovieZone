@@ -1,0 +1,49 @@
+﻿@model MovieZone.ViewModels.MovieFormViewModel
+@{
+    ViewBag.Title = "MovieForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var defaultDirector = (Model.MovieSubmission.DirectorId == 0) ? "" : Model.Directors.Single(d => d.Id == Model.MovieSubmission.DirectorId).Name; 
+}
+
+<h2>MovieForm</h2>
+
+@using (Html.BeginForm("Submit", "Movies"))
+{
+<div>
+    @Html.LabelFor(m => m.MovieSubmission.Title)
+    @Html.TextBoxFor(m => m.MovieSubmission.Title, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.MovieSubmission.Title,null, new { @class = "text-danger" })
+</div>
+<div>
+    @Html.LabelFor(m => m.MovieSubmission.ReleaseYear)
+    @Html.TextBoxFor(m => m.MovieSubmission.ReleaseYear, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.MovieSubmission.ReleaseYear,null, new { @class = "text-danger" })
+</div>
+<div>
+    @Html.LabelFor(m => m.MovieSubmission.DirectorId)
+    @Html.DropDownListFor(m => m.MovieSubmission.DirectorId, new SelectList(Model.Directors, "Id", "Name"), defaultDirector, new { @class = "form-control" })
+</div>
+<div>
+    @Html.LabelFor(m => m.MovieSubmission.DurationInMinutes)
+    @Html.TextBoxFor(m => m.MovieSubmission.DurationInMinutes, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.MovieSubmission.DurationInMinutes,null, new { @class = "text-danger" })
+</div>
+<div>
+    <p>Genres</p>   
+    @for (var i = 0; i < Model.MovieSubmission.Genres.Count; i++)
+    {
+        @Html.DropDownListFor(m => m.MovieSubmission.Genres[i].Id, new SelectList(Model.Genres, "Id", "Name", Model.MovieSubmission.Genres[i].Id), new { @class = "form-control" })        
+        <input data-val="false" name="MovieSubmission.Genres[@i].Name" type="hidden" value="x">
+    }
+    @Html.ValidationMessageFor(m => m.MovieSubmission.Genres, null, new { @class = "text-danger" })
+</div>
+<div>
+    @Html.LabelFor(m => m.MovieSubmission.Description)
+    @Html.TextAreaFor(m => m.MovieSubmission.Description, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.MovieSubmission.Description)
+</div>
+<div>
+    @Html.HiddenFor(m => m.MovieSubmission.MovieId)   
+</div>
+<button type="submit" class="btn btn-primary">SUBMIT</button>
+}

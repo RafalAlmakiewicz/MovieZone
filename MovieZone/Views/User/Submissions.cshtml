@@ -1,0 +1,24 @@
+﻿@model MovieZone.ViewModels.SubmissionsViewModel
+@{
+    ViewBag.Title = "Submissions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Submissions</h2>
+
+@foreach (var submission in Model.MovieSubmissions)
+{
+    <h4>@Model.SubmissionType(submission.MovieId)</h4>
+    <h6>@submission.Title</h6>
+    <p>@submission.ReleaseYear</p>
+    <p>@submission.DurationInMinutes</p>
+    <p>@submission.Director.Name</p>
+    @foreach (var genre in submission.Genres)
+    {
+        @genre.Name
+    }
+    @Html.ActionLink("ACCEPT", "Save", "Movies", new { submissionId = submission.SubmissionId }, new { @class = "btn btn-primary" });
+}
+
+
+

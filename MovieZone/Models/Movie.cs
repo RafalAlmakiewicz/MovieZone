@@ -16,6 +16,8 @@ namespace MovieZone.Models
         public int ReleaseYear { get; set; }
         public Director Director { get; set; }
         public int DirectorId { get; set; }
+
+        [Display(Name ="Duration in minutes")]
         public int DurationInMinutes { get; set; }
         public List<Genre> Genres { get; set; }
         public double RatingAvg
@@ -30,6 +32,7 @@ namespace MovieZone.Models
         
         public int NumberOfRatings { get; set; }
         public int SumOfRatings { get; set; }
+        public string Description { get; set; }
 
 
     }

@@ -173,6 +173,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -196,20 +197,32 @@
     <Compile Include="Migrations\202106021846100_AllowMultipleGenresPerMovie.designer.cs">
       <DependentUpon>202106021846100_AllowMultipleGenresPerMovie.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106041033083_AddDescriptionToMovie.cs" />
+    <Compile Include="Migrations\202106041033083_AddDescriptionToMovie.designer.cs">
+      <DependentUpon>202106041033083_AddDescriptionToMovie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202106041214348_AddMovieSubmissionsTable.cs" />
+    <Compile Include="Migrations\202106041214348_AddMovieSubmissionsTable.designer.cs">
+      <DependentUpon>202106041214348_AddMovieSubmissionsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AtLeastOneGenre.cs" />
     <Compile Include="Models\Director.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Movie.cs" />
+    <Compile Include="Models\MovieSubmission.cs" />
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\DirectorDetailsViewModel.cs" />
     <Compile Include="ViewModels\MovieDetailsViewModel.cs" />
+    <Compile Include="ViewModels\MovieFormViewModel.cs" />
     <Compile Include="ViewModels\MoviesListViewModel.cs" />
+    <Compile Include="ViewModels\SubmissionsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -271,6 +284,8 @@
     <Content Include="Views\Directors\Details.cshtml" />
     <Content Include="Views\Movies\Details.cshtml" />
     <Content Include="Views\Movies\ReviewForm.cshtml" />
+    <Content Include="Views\Movies\MovieForm.cshtml" />
+    <Content Include="Views\User\Submissions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -303,6 +318,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106021846100_AllowMultipleGenresPerMovie.resx">
       <DependentUpon>202106021846100_AllowMultipleGenresPerMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106041033083_AddDescriptionToMovie.resx">
+      <DependentUpon>202106041033083_AddDescriptionToMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106041214348_AddMovieSubmissionsTable.resx">
+      <DependentUpon>202106041214348_AddMovieSubmissionsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

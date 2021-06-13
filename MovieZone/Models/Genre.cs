@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
+
 namespace MovieZone.Models
 {
     public class Genre
@@ -14,5 +15,6 @@ namespace MovieZone.Models
         [MaxLength(100)]
         public string Name { get; set; }
         public List<Movie> Movies { get; set; }
+        public List<MovieSubmission> MovieSubmissions { get; set; }
     }
 }

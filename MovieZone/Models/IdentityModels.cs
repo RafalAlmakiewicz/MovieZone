@@ -26,8 +26,8 @@ namespace MovieZone.Models
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Director> Directors { get; set; }
         public DbSet<Rating> Ratings { get; set; }
+        public DbSet<MovieSubmission> MovieSubmissions { get; set; }
 
-        
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

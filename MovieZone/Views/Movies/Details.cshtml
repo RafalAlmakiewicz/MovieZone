@@ -6,7 +6,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var defaultValue = (Model.UserRatingValue == 0) ? "" : Model.UserRatingValue.ToString();
     var movie = Model.Movie;
+    var source = @"https://m.media-amazon.com/images/M/MV5BNGIzY2IzODQtNThmMi00ZDE4LWI5YzAtNzNlZTM1ZjYyYjUyXkEyXkFqcGdeQXVyODEzNjM5OTQ@._V1_.jpg";
 
+}
+
+@if (movie.Id == 2)
+{
+    <img src="@source" alt="poster" style="height:100px;width:60px;" />
 }
 
 <h2>@movie.Title</h2>
@@ -51,4 +57,6 @@ else
         <p>@rating.Review.DateAdded</p>
     }
 }
+
+
 

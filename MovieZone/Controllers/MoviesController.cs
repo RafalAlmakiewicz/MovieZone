@@ -73,12 +73,10 @@ namespace MovieZone.Controllers
             var movie = _context.Movies.Include(m => m.Genres).Include(m => m.Director).SingleOrDefault(m => m.Id == id);
             if (movie == null)
                 return HttpNotFound();
-            //movie.Genre = _context.Genres.Single(g => g.Id == movie.GenreId);
-            //movie.Director = _context.Directors.Single(d => d.Id == movie.DirectorId);
+            
             var userId = User.Identity.GetUserId();
             var ratingsWithReview = _context.Ratings.Where(r => r.MovieId == id && r.ReviewId != null).Include(r => r.Review).Include(r => r.ApplicationUser).OrderByDescending(m => m.Review.DateAdded);
             var userRating = _context.Ratings.SingleOrDefault(r => r.MovieId == id && r.ApplicationUserId == userId);
-
 
             var model = new MovieDetailsViewModel
             {
@@ -144,7 +142,7 @@ namespace MovieZone.Controllers
         public void UpdateRatingAvg(Rating ratingInDb, int movieId, int newValue)
         {
             var movie = _context.Movies.Single(m => m.Id == movieId);
-            var x = "";
+            
             if(ratingInDb==null)
             {
                 movie.SumOfRatings += newValue;
@@ -152,7 +150,7 @@ namespace MovieZone.Controllers
             }
             else            
                 movie.SumOfRatings += (-ratingInDb.Value) + newValue;
-            var y = "";
+            
             _context.SaveChanges();
         }
 
@@ -175,12 +173,65 @@ namespace MovieZone.Controllers
             }
             else         
                 rating.Value = UserRatingValue;
-            var s = "";
+            
             _context.SaveChanges();
             return RedirectToAction("Details","Movies", new { id });
         }
 
+        public ActionResult New()
+        {
+            return View("MovieForm", new MovieFormViewModel());
+        }
 
+        public ActionResult Edit(int id)
+        {
+            var movie = _context.Movies.Include(m => m.Genres).Include(m => m.Director).SingleOrDefault(m => m.Id == id);
+            if (movie == null)
+                return HttpNotFound();          
+            return View("MovieForm", new MovieFormViewModel(movie));
+        }
 
+        [HttpPost]
+        public ActionResult Submit( MovieFormViewModel movieFormViewModel)//[Bind(Include = "description")]
+        {           
+            if (!ModelState.IsValid)
+                return View("MovieForm", movieFormViewModel);
+
+            var id = 0;
+            for (var i = 0; i < movieFormViewModel.MovieSubmission.Genres.Count; i++)
+            {
+                id = movieFormViewModel.MovieSubmission.Genres[i].Id;
+                movieFormViewModel.MovieSubmission.Genres[i] = _context.Genres.SingleOrDefault(g => g.Id == id);
+            }
+            movieFormViewModel.RemoveSubmittedGenresThatAreRepeatsOrNull();
+
+            _context.MovieSubmissions.Add(movieFormViewModel.MovieSubmission);
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Save(int submissionId)
+        {
+            var submission = _context.MovieSubmissions.SingleOrDefault(ms => ms.SubmissionId == submissionId);
+
+            if (submission == null)
+                return HttpNotFound();
+
+            var movie = (submission.MovieId == 0) ? new Movie() : _context.Movies.Single(m => m.Id == submission.MovieId);
+
+            movie.Title = submission.Title;
+            movie.ReleaseYear = submission.ReleaseYear;
+            movie.DirectorId = submission.DirectorId;
+            movie.DurationInMinutes = submission.DurationInMinutes;
+            movie.Description = submission.Description;
+            movie.Genres = submission.Genres;
+
+            if (submission.MovieId == 0)
+                _context.Movies.Add(movie);
+
+            _context.MovieSubmissions.Remove(submission);
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
