@@ -87,60 +87,11 @@ namespace MovieZone.Controllers
             return View(model);
         }
 
-        [Authorize]
-        public ActionResult NewReview(int id)
+        
+
+        public static void UpdateRatingAvg(Rating ratingInDb, int movieId, int newValue)
         {
-            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
-            if (movie == null)
-                return HttpNotFound();
-
-            var userId = User.Identity.GetUserId();
-
-            var rating = _context.Ratings.Include(r => r.Review).SingleOrDefault(r => r.MovieId == movie.Id && r.ApplicationUserId == userId);
-
-            if(rating == null)              
-                return View("ReviewForm", new Rating { Review = new Review(), MovieId = movie.Id, ApplicationUserId = userId });
-                    
-            return View("ReviewForm", rating);           
-        }
-
-        [HttpPost]
-        public ActionResult SaveReview(Rating rating)
-        {
-            if (!ModelState.IsValid)
-                return View("ReviewForm", rating);
-
-            rating.Review.DateAdded = DateTime.Now;
-            var ratingInDb = _context.Ratings.SingleOrDefault(r => r.MovieId == rating.MovieId && r.ApplicationUserId == rating.ApplicationUserId);
-            UpdateRatingAvg(ratingInDb, rating.MovieId, rating.Value);
-
-            if (ratingInDb==null)
-            {
-                _context.Reviews.Add(rating.Review);
-                rating.ReviewId = rating.Review.Id;
-                _context.Ratings.Add(rating);       
-            }
-            else if(ratingInDb.ReviewId==null)
-            {
-                ratingInDb.Value = rating.Value;
-                _context.Reviews.Add(rating.Review);
-                ratingInDb.Review = rating.Review;
-                ratingInDb.ReviewId = rating.Review.Id;
-            }
-            else
-            {
-                ratingInDb.Value = rating.Value;
-                var reviewInDb = _context.Reviews.Single(r => r.Id == ratingInDb.ReviewId);
-                reviewInDb.Body = rating.Review.Body;
-                reviewInDb.DateAdded = rating.Review.DateAdded;
-            }
-            
-            _context.SaveChanges();
-            return RedirectToAction("Index", "Home");       
-        }
-
-        public void UpdateRatingAvg(Rating ratingInDb, int movieId, int newValue)
-        {
+            var _context = new ApplicationDbContext();
             var movie = _context.Movies.Single(m => m.Id == movieId);
             
             if(ratingInDb==null)
@@ -178,60 +129,6 @@ namespace MovieZone.Controllers
             return RedirectToAction("Details","Movies", new { id });
         }
 
-        public ActionResult New()
-        {
-            return View("MovieForm", new MovieFormViewModel());
-        }
-
-        public ActionResult Edit(int id)
-        {
-            var movie = _context.Movies.Include(m => m.Genres).Include(m => m.Director).SingleOrDefault(m => m.Id == id);
-            if (movie == null)
-                return HttpNotFound();          
-            return View("MovieForm", new MovieFormViewModel(movie));
-        }
-
-        [HttpPost]
-        public ActionResult Submit( MovieFormViewModel movieFormViewModel)//[Bind(Include = "description")]
-        {           
-            if (!ModelState.IsValid)
-                return View("MovieForm", movieFormViewModel);
-
-            var id = 0;
-            for (var i = 0; i < movieFormViewModel.MovieSubmission.Genres.Count; i++)
-            {
-                id = movieFormViewModel.MovieSubmission.Genres[i].Id;
-                movieFormViewModel.MovieSubmission.Genres[i] = _context.Genres.SingleOrDefault(g => g.Id == id);
-            }
-            movieFormViewModel.RemoveSubmittedGenresThatAreRepeatsOrNull();
-
-            _context.MovieSubmissions.Add(movieFormViewModel.MovieSubmission);
-            _context.SaveChanges();
-            return RedirectToAction("Index", "Home");
-        }
-
-        public ActionResult Save(int submissionId)
-        {
-            var submission = _context.MovieSubmissions.SingleOrDefault(ms => ms.SubmissionId == submissionId);
-
-            if (submission == null)
-                return HttpNotFound();
-
-            var movie = (submission.MovieId == 0) ? new Movie() : _context.Movies.Single(m => m.Id == submission.MovieId);
-
-            movie.Title = submission.Title;
-            movie.ReleaseYear = submission.ReleaseYear;
-            movie.DirectorId = submission.DirectorId;
-            movie.DurationInMinutes = submission.DurationInMinutes;
-            movie.Description = submission.Description;
-            movie.Genres = submission.Genres;
-
-            if (submission.MovieId == 0)
-                _context.Movies.Add(movie);
-
-            _context.MovieSubmissions.Remove(submission);
-            _context.SaveChanges();
-            return RedirectToAction("Index", "Home");
-        }
+        
     }
 }
