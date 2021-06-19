@@ -53,9 +53,9 @@ namespace MovieZone.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Save(int submissionId)
+        public ActionResult Accept(int submissionId)
         {
-            var submission = _context.MovieSubmissions.SingleOrDefault(ms => ms.SubmissionId == submissionId);
+            var submission = _context.MovieSubmissions.Include(ms => ms.Genres).SingleOrDefault(ms => ms.SubmissionId == submissionId);
 
             if (submission == null)
                 return HttpNotFound();
@@ -66,15 +66,31 @@ namespace MovieZone.Controllers
             movie.ReleaseYear = submission.ReleaseYear;
             movie.DirectorId = submission.DirectorId;
             movie.DurationInMinutes = submission.DurationInMinutes;
-            movie.Description = submission.Description;
-            movie.Genres = submission.Genres;
+            movie.Description = submission.Description;            
+            movie.Genres = new List<Genre>();
+            var genreId = 0;
+            for (var i = 0; i < submission.Genres.Count; i++)
+            {
+                genreId = submission.Genres[i].Id;
+                movie.Genres.Add(_context.Genres.Single(g => g.Id == genreId));             
+            }
 
             if (submission.MovieId == 0)
                 _context.Movies.Add(movie);
 
             _context.MovieSubmissions.Remove(submission);
             _context.SaveChanges();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Details", "Movies", new { id = movie.Id});
+        }
+
+        public ActionResult Reject(int submissionId)
+        {
+            var submission = _context.MovieSubmissions.SingleOrDefault(ms => ms.SubmissionId == submissionId);
+            if (submission == null)
+                return HttpNotFound();
+            _context.MovieSubmissions.Remove(submission);
+            _context.SaveChanges();
+            return RedirectToAction("Submissions", "User");
         }
     }
 }

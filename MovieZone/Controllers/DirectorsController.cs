@@ -36,7 +36,7 @@ namespace MovieZone.Controllers
             return View(model);
         }
 
-        public ActionResult test()
+        public ActionResult New()
         {
             //string s = "";
             //var id = User.Identity.GetUserId();
@@ -47,9 +47,9 @@ namespace MovieZone.Controllers
             //else
             //    s = "cos innego";
 
-            var l = new List<Rating> { null, null };
+            //var l = new List<Rating> { null, null };
 
-            return Content($"{l.Count}, {l[0]}, {l[1]}");
+            return Content("yaaaay");
         }
     }
 }

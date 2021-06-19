@@ -24,7 +24,7 @@ namespace MovieZone.Models
 
 
         public Director Director { get; set; }
-        [Display(Name = "Director")]
+        [Display(Name = "Director"),Required(ErrorMessage ="Select director from a list above")]
         public int DirectorId { get; set; }
 
 

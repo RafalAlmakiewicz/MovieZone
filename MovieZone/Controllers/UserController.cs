@@ -25,7 +25,7 @@ namespace MovieZone.Controllers
             return View();
         }
 
-        public ActionResult Submissions(int submissionId, int pageNum=1)
+        public ActionResult Submissions(int pageNum=1)
         {
             var submissions = _context.MovieSubmissions.Include(s => s.Director).Include(s => s.Genres).ToList();
 

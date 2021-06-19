@@ -2,12 +2,12 @@
 @{
     ViewBag.Title = "MovieForm";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var defaultDirector = (Model.MovieSubmission.DirectorId == 0) ? "" : Model.Directors.Single(d => d.Id == Model.MovieSubmission.DirectorId).Name; 
+    var defaultDirector = (Model.MovieSubmission.DirectorId == 0) ? "" : Model.Directors.Single(d => d.Id == Model.MovieSubmission.DirectorId).Name;
 }
 
 <h2>MovieForm</h2>
 
-@using (Html.BeginForm("Submit", "Movies"))
+@using (Html.BeginForm("Submit", "MovieSubmissions"))
 {
 <div>
     @Html.LabelFor(m => m.MovieSubmission.Title)
@@ -22,6 +22,7 @@
 <div>
     @Html.LabelFor(m => m.MovieSubmission.DirectorId)
     @Html.DropDownListFor(m => m.MovieSubmission.DirectorId, new SelectList(Model.Directors, "Id", "Name"), defaultDirector, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.MovieSubmission.DirectorId, null, new { @class = "text-danger" })
 </div>
 <div>
     @Html.LabelFor(m => m.MovieSubmission.DurationInMinutes)

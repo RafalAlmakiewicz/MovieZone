@@ -13,13 +13,16 @@ namespace MovieZone.Models
         [Required]
         [MaxLength(255)]
         public string Title { get; set; }
+        [Display(Name = "Release Year")]
         public int ReleaseYear { get; set; }
         public Director Director { get; set; }
+        [Display(Name = "Director")]
         public int DirectorId { get; set; }
 
         [Display(Name ="Duration in minutes")]
         public int DurationInMinutes { get; set; }
         public List<Genre> Genres { get; set; }
+        [Display(Name = "Score")]
         public double RatingAvg
         {
             get

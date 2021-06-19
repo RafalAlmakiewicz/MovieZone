@@ -21,7 +21,7 @@ namespace MovieZone.Controllers
 
 
         [Authorize]
-        public ActionResult NewReview(int id)
+        public ActionResult New(int id)
         {
             var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
             if (movie == null)
@@ -38,7 +38,7 @@ namespace MovieZone.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveReview(Rating rating)
+        public ActionResult Save(Rating rating)
         {
             if (!ModelState.IsValid)
                 return View("ReviewForm", rating);

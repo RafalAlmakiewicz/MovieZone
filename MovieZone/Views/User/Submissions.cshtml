@@ -8,16 +8,22 @@
 
 @foreach (var submission in Model.MovieSubmissions)
 {
-    <h4>@Model.SubmissionType(submission.MovieId)</h4>
-    <h6>@submission.Title</h6>
-    <p>@submission.ReleaseYear</p>
-    <p>@submission.DurationInMinutes</p>
-    <p>@submission.Director.Name</p>
-    @foreach (var genre in submission.Genres)
-    {
-        @genre.Name
-    }
-    @Html.ActionLink("ACCEPT", "Save", "Movies", new { submissionId = submission.SubmissionId }, new { @class = "btn btn-primary" });
+    <div>
+        <h4 class="text-secondary">@Model.SubmissionType(submission.MovieId)</h4>
+        <h6>@submission.Title</h6>
+        <p>@submission.ReleaseYear</p>
+        <p>@submission.DurationInMinutes</p>
+        <p>@submission.Director.Name</p>
+        @foreach (var genre in submission.Genres)
+        {
+            @genre.Name
+        }
+    <div>
+        @Html.ActionLink("ACCEPT", "Accept", "MovieSubmissions", new { submissionId = submission.SubmissionId }, new { @class = "btn btn-success" });
+        @Html.ActionLink("REJECT", "Reject", "MovieSubmissions", new { submissionId = submission.SubmissionId }, new { @class = "btn btn-danger" });
+    </div>
+       
+    </div>
 }
 
 
