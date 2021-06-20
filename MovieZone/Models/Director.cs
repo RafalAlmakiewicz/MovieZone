@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 namespace MovieZone.Models
 {
     public class Director
-    {
+    {       
         public int Id { get; set; }
 
         [Required]

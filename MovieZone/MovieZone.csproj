@@ -170,6 +170,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DirectorsController.cs" />
+    <Compile Include="Controllers\DirectorSubmissionsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
@@ -207,10 +208,15 @@
     <Compile Include="Migrations\202106041214348_AddMovieSubmissionsTable.designer.cs">
       <DependentUpon>202106041214348_AddMovieSubmissionsTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106191353408_AddDirectorSubmissionsTable.cs" />
+    <Compile Include="Migrations\202106191353408_AddDirectorSubmissionsTable.designer.cs">
+      <DependentUpon>202106191353408_AddDirectorSubmissionsTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AtLeastOneGenre.cs" />
     <Compile Include="Models\Director.cs" />
+    <Compile Include="Models\DirectorSubmission.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -288,6 +294,7 @@
     <Content Include="Views\Reviews\ReviewForm.cshtml" />
     <Content Include="Views\MovieSubmissions\MovieForm.cshtml" />
     <Content Include="Views\User\Submissions.cshtml" />
+    <Content Include="Views\DirectorSubmissions\DirectorForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -326,6 +333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106041214348_AddMovieSubmissionsTable.resx">
       <DependentUpon>202106041214348_AddMovieSubmissionsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106191353408_AddDirectorSubmissionsTable.resx">
+      <DependentUpon>202106191353408_AddDirectorSubmissionsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

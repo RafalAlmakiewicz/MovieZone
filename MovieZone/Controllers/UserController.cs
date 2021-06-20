@@ -27,18 +27,24 @@ namespace MovieZone.Controllers
 
         public ActionResult Submissions(int pageNum=1)
         {
-            var submissions = _context.MovieSubmissions.Include(s => s.Director).Include(s => s.Genres).ToList();
+            var movieSubmissions = _context.MovieSubmissions.Include(s => s.Director).Include(s => s.Genres).ToList();
+            var directorSubmissions = _context.DirectorSubmissions.ToList();
+            var AlldirSubCount = directorSubmissions.Count;
+            var count = movieSubmissions.Count + AlldirSubCount;
+            var pageCount = (count % defPageSize == 0) ? count / defPageSize : count / defPageSize + 1;
+            
+            directorSubmissions = directorSubmissions.Skip((pageNum - 1) * defPageSize).Take(defPageSize).ToList();
+            movieSubmissions = movieSubmissions.Skip((pageNum - 1) * defPageSize - AlldirSubCount).Take(defPageSize - directorSubmissions.Count).ToList();
 
-            var pageCount = (submissions.Count % defPageSize == 0) ? submissions.Count / defPageSize : submissions.Count / defPageSize + 1;
-
-            submissions = submissions.Skip((pageNum-1)* defPageSize).Take(defPageSize).ToList();
+            //var pageCount = (movieSub.Count % defPageSize == 0) ? movieSub.Count / defPageSize : movieSub.Count / defPageSize + 1;
+            //movieSub = movieSub.Skip((pageNum-1)* defPageSize).Take(defPageSize).ToList();
 
             var model = new SubmissionsViewModel
             {
-                MovieSubmissions = submissions,
+                DirectorSubmissions = directorSubmissions,
+                MovieSubmissions = movieSubmissions,
                 PageCount = pageCount
-            };
-            
+            }; 
             return View(model);
         }
     }

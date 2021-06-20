@@ -1,0 +1,27 @@
+﻿@model MovieZone.Models.DirectorSubmission
+@{
+    ViewBag.Title = "DirectorForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DirectorForm</h2>
+
+
+@using (Html.BeginForm("Submit", "DirectorSubmissions"))
+{
+    <div>
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger" })
+    </div>   
+    <div>
+        @Html.LabelFor(m => m.Bio)
+        @Html.TextAreaFor(m => m.Bio, new { @class = "form-control" })
+    </div>
+    <div>
+        @Html.HiddenFor(m => m.DirectorId)
+    </div>
+    <button type="submit" class="btn btn-primary">SUBMIT</button>
+}
+
+

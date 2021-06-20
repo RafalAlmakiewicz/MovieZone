@@ -27,6 +27,7 @@ namespace MovieZone.Models
         public DbSet<Director> Directors { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<MovieSubmission> MovieSubmissions { get; set; }
+        public DbSet<DirectorSubmission> DirectorSubmissions { get; set; }
 
 
         public ApplicationDbContext()
