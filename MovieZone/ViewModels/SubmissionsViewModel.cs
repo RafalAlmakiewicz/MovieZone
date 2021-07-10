@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using MovieZone.Models;
+using MovieZone.Core.Domain;
 
 namespace MovieZone.ViewModels
 {

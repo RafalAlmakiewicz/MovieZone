@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MovieZone.ViewModels;
 using System.Data.Entity;
-using MovieZone.Models;
+using MovieZone.Persistance;
 using Microsoft.AspNet.Identity;
 
 namespace MovieZone.Controllers

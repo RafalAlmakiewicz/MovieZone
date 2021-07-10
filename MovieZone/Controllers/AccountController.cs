@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using MovieZone.Core.Domain;
 using MovieZone.Models;
 
 namespace MovieZone.Controllers

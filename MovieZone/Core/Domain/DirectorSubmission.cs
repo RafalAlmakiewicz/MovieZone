@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace MovieZone.Models
+namespace MovieZone.Core.Domain
 {
     public class DirectorSubmission
     {

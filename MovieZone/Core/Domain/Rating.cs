@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MovieZone.Models
+namespace MovieZone.Core.Domain
 {
     public class Rating
     {
