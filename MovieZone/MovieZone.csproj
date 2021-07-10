@@ -302,6 +302,8 @@
     <Content Include="Views\MovieSubmissions\MovieForm.cshtml" />
     <Content Include="Views\User\Submissions.cshtml" />
     <Content Include="Views\DirectorSubmissions\DirectorForm.cshtml" />
+    <Content Include="Views\Shared\MovieSummary.cshtml" />
+    <Content Include="Views\Shared\AcceptAndRejectLinks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

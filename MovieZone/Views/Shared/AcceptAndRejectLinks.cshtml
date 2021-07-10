@@ -1,0 +1,7 @@
+﻿
+
+<div>
+    @Html.ActionLink("ACCEPT", "Accept", (string)ViewData["controller"], new { submissionId = (int)ViewData["id"] }, new { @class = "btn btn-success" });
+    @Html.ActionLink("REJECT", "Reject", (string)ViewData["controller"], new { submissionId = (int)ViewData["id"] }, new { @class = "btn btn-danger" });
+</div>
+

@@ -82,7 +82,7 @@ namespace MovieZone.Controllers
             var model = new MovieDetailsViewModel
             {
                 Movie = movie,
-                RatingsWithReview = (showAllReviews) ? ratingsWithReview.ToList() : new List<Rating> { ratingsWithReview.FirstOrDefault() },
+                RatingsWithReview = (showAllReviews) ? ratingsWithReview.ToList() : (ratingsWithReview.FirstOrDefault() != null) ? new List<Rating> { ratingsWithReview.FirstOrDefault() } : new List<Rating>(),
                 UserRatingValue = (userRating == null) ? 0 : userRating.Value
             };
             return View(model);

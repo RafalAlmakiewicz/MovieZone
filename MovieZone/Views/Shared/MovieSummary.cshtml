@@ -1,0 +1,13 @@
+﻿@model MovieZone.Core.Domain.Movie
+
+<div>
+    <h2>@Model.Title</h2>
+    <p>@Model.ReleaseYear</p>
+    <p>@Model.DurationInMinutes</p>
+    <p>@Model.Director.Name</p>
+    <p>@Model.RatingAvg</p>
+    @foreach (var genre in Model.Genres)
+    {
+        @genre.Name
+    }
+</div>

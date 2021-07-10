@@ -12,30 +12,33 @@
         <h4 class="text-secondary">@Model.SubmissionType(submission.DirectorId)</h4>
         <h6>@submission.Name</h6>
         <p>@submission.Bio</p>
-        <div>
+        @*<div>
             @Html.ActionLink("ACCEPT", "Accept", "DirectorSubmissions", new { submissionId = submission.SubmissionId }, new { @class = "btn btn-success" });
             @Html.ActionLink("REJECT", "Reject", "DirectorSubmissions", new { submissionId = submission.SubmissionId }, new { @class = "btn btn-danger" });
-        </div>
+        </div>*@
+
+        @Html.Partial("AcceptAndRejectLinks", new ViewDataDictionary(this.ViewData) { {"id", submission.SubmissionId }, {"controller","DirectorSubmissions" } })
     </div>
 }
 
 @foreach (var submission in Model.MovieSubmissions)
 {
-    <div>
-        <h4 class="text-secondary">@Model.SubmissionType(submission.MovieId)</h4>
-        <h6>@submission.Title</h6>
-        <p>@submission.ReleaseYear</p>
-        <p>@submission.DurationInMinutes</p>
-        <p>@submission.Director.Name</p>
-        @foreach (var genre in submission.Genres)
-        {
-            @genre.Name
-        }
-        <div>
+<div>
+    <h4 class="text-secondary">@Model.SubmissionType(submission.MovieId)</h4>
+    <h6>@submission.Title</h6>
+    <p>@submission.ReleaseYear</p>
+    <p>@submission.DurationInMinutes</p>
+    <p>@submission.Director.Name</p>
+    @foreach (var genre in submission.Genres)
+    {
+        @genre.Name
+    }
+    @*<div>
             @Html.ActionLink("ACCEPT", "Accept", "MovieSubmissions", new { submissionId = submission.SubmissionId }, new { @class = "btn btn-success" });
             @Html.ActionLink("REJECT", "Reject", "MovieSubmissions", new { submissionId = submission.SubmissionId }, new { @class = "btn btn-danger" });
-        </div>
-    </div>
+        </div>*@
+    @Html.Partial("AcceptAndRejectLinks", new ViewDataDictionary(this.ViewData) { { "id", submission.SubmissionId }, { "controller", "MovieSubmissions" } })
+</div>
 }
 
 <table>
